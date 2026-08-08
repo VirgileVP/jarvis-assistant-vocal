@@ -139,8 +139,14 @@ class PiperProvider(ProviderTTS):
         try:
             if self._voix is None:
                 self._voix = PiperVoice.load(str(chemin))
-            brut = b"".join(self._voix.synthesize_stream_raw(texte))
-            return np.frombuffer(brut, dtype=np.int16), self._voix.config.sample_rate
+            # piper-tts >= 1.3 : synthesize() rend des AudioChunk (synthesize_stream_raw
+            # a disparu). Chaque morceau porte son PCM 16 bits et sa frequence.
+            morceaux = list(self._voix.synthesize(texte))
+            if not morceaux:
+                return None
+            audio = np.concatenate(
+                [np.frombuffer(m.audio_int16_bytes, dtype=np.int16) for m in morceaux])
+            return audio, morceaux[0].sample_rate
         except Exception as e:
             print(f"  [Piper] echec ({e}), repli voix Windows.")
             return None
