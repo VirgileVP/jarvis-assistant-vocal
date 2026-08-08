@@ -43,6 +43,11 @@ mail:                          # Gmail via IMAP/SMTP (facultatif)
 audio:
   micro: 1                     # index du micro (voir sounddevice.query_devices())
   haut_parleur: null           # null = sortie par defaut de Windows
+  seuil_reveil: 0.5            # score "Hey Jarvis" a atteindre (0-1). Baisse a ~0.3 s'il
+                               # faut crier ; remonte s'il se declenche tout seul.
+  seuil_silence: 0.010         # niveau au-dessus duquel on considere que tu parles encore.
+                               # Baisse (0.005) si tes fins de phrase sont coupees.
+  seuil_parole: 0.025          # niveau qui relance l'ecoute dans la fenetre de suivi.
 
 whisper:
   modele: "medium"

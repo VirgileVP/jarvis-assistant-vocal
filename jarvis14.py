@@ -52,12 +52,14 @@ MODELE_WHISPER = config.reglage("whisper.modele", "medium")
 TAUX = 16000
 BLOC = 1280
 
-SEUIL_REVEIL = 0.5
+# Seuils de detection reglables dans config.yaml (section audio) : un micro peu
+# sensible ou une voix calme demandent des valeurs plus basses.
+SEUIL_REVEIL = float(config.reglage("audio.seuil_reveil", 0.5))
 SEUIL_INTERRUPTION = 0.7   # plus strict : le micro entend aussi l'enceinte
-SEUIL_PAROLE_SUR = 0.025
+SEUIL_PAROLE_SUR = float(config.reglage("audio.seuil_parole", 0.025))
 BLOCS_AVANT_VERIF = 5      # 5 x 80 ms = 0,4 s de parole continue
 DELAI_ENTRE_VERIFS = 1.0
-SEUIL_SILENCE = 0.010
+SEUIL_SILENCE = float(config.reglage("audio.seuil_silence", 0.010))
 SILENCE_FIN = 1.2
 DUREE_MAX = 20
 
