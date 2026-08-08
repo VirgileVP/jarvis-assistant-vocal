@@ -299,7 +299,9 @@ def _demarrer_serveur():
 
         async def principal():
             import websockets
-            async with websockets.serve(_handler, "0.0.0.0", _port(), max_size=None):
+            # Ecoute uniquement en local : le tunnel (ngrok ou manuel) se connecte
+            # a localhost, donc rien a exposer au reste du reseau.
+            async with websockets.serve(_handler, "127.0.0.1", _port(), max_size=None):
                 pret.set()
                 await asyncio.Future()
         try:

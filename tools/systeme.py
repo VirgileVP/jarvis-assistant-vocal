@@ -71,7 +71,10 @@ def ouvrir_application(nom: str) -> str:
         if str(cible).startswith("http"):
             webbrowser.open(cible)
         else:
-            subprocess.Popen(f'start "" "{cible}"', shell=True)
+            # os.startfile (comme tools/apps.py) : gere .exe, fichiers et protocoles
+            # (spotify:, ms-settings:) sans passer par le shell, donc sans risque
+            # d'injection de commande via le nom fourni par le modele.
+            os.startfile(cible)
         return f"{nom} lance."
     except Exception as e:
         return f"Impossible de lancer {nom} : {e}"

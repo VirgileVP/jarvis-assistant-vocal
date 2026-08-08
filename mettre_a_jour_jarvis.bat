@@ -5,6 +5,7 @@ rem versions compatibles, puis synchronise l'environnement. A lancer
 rem quand on le souhaite (pas a chaque demarrage : une nouvelle version
 rem peut demander internet et parfois casser quelque chose).
 cd /d "%~dp0"
+call "%~dp0resoudre_uv.bat"
 
 echo ============================================
 echo   Mise a jour des dependances de Jarvis
@@ -12,12 +13,12 @@ echo ============================================
 echo.
 
 echo [1/2] Recherche des dernieres versions...
-"%USERPROFILE%\.local\bin\uv.exe" lock --upgrade
+"%UV%" lock --upgrade
 if errorlevel 1 goto erreur
 
 echo.
 echo [2/2] Installation...
-"%USERPROFILE%\.local\bin\uv.exe" sync
+"%UV%" sync
 if errorlevel 1 goto erreur
 
 echo.
